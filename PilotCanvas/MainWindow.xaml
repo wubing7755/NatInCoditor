@@ -1,0 +1,145 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        x:Class="PilotCanvas.MainWindow"
+        
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        
+        xmlns:local="clr-namespace:PilotCanvas"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        
+        xmlns:content="clr-namespace:PilotLib.Component.Content.Func;assembly=PilotLib"
+        xmlns:leftBar="clr-namespace:PilotLib.Component.LeftBar;assembly=PilotLib"
+        xmlns:rightBar="clr-namespace:PilotLib.Component.RightBar;assembly=PilotLib"
+        xmlns:topBtnBar="clr-namespace:PilotLib.Component.TopBar.Btn;assembly=PilotLib"
+        xmlns:topFuncBar ="clr-namespace:PilotLib.Component.TopBar.Func;assembly=PilotLib"
+        xmlns:bottomBtnBar="clr-namespace:PilotLib.Component.BottomBar.Btn;assembly=PilotLib"
+        xmlns:bottomFuncBar="clr-namespace:PilotLib.Component.BottomBar.Func;assembly=PilotLib"
+
+        xmlns:m="clr-namespace:CoreLib;assembly=CoreLib"
+    
+        Loaded="Window_Loaded"
+        Activated="Window_Activated"
+        Deactivated="Window_Deactivated"
+        Closing="Window_Closing"
+
+        WindowState="{Binding WindowSize, RelativeSource={RelativeSource Self}}"
+        Topmost="{Binding IsTopWindow, RelativeSource={RelativeSource Self}}"
+    
+        Title = "Ipy"
+        MinHeight="500"
+        Height = "900"
+        MaxHeight="1200"
+        MinWidth="1000"
+        Width = "1600"
+        MaxWidth="1900"
+
+        ShowInTaskbar="True"
+        ResizeMode = "CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <m:ImgPaths x:Key="ImgPathDs"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <Binding Source="{StaticResource ImgPathDs}"/>
+    </Window.DataContext>
+
+    <Grid Margin="2">
+        <!-- define the attributes of a grid's row -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" MinHeight="20"/>
+            <RowDefinition Height="120" MinHeight="0"/>
+            <RowDefinition Height="*" MinHeight="400"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tool Bar -->
+        <StackPanel Grid.Row="0" Background="WhiteSmoke">
+            <topBtnBar:TopBtnBar/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Background="SkyBlue">
+            <topFuncBar:TopFuncBar/>
+        </StackPanel>
+
+        <!-- Main Window -->
+        <Grid Grid.Row="2" Background="WhiteSmoke" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="Auto" MinWidth="300"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*" MinWidth="300"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto" MinWidth="250"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- left toolbar -->
+            <Grid Grid.Column="0" Background="#323844">
+                <TextBox Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top">btn</TextBox>
+            </Grid>
+
+            <!-- left function bar -->
+            <Grid Grid.Column="1">
+                <leftBar:LeftBar/>
+            </Grid>
+
+            <!-- 拖拽条 -->
+            <GridSplitter Grid.Column="2" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                      Background="SkyBlue" ShowsPreview="False"/>
+
+            <!-- content -->
+            <Grid Grid.Column="3">
+                <content:Content/>
+            </Grid>
+
+            <!-- 拖拽条 -->
+            <GridSplitter Grid.Column="4" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                      Background="SkyBlue" ShowsPreview="False"/>
+
+            <!-- right definition bar -->
+            <Grid Grid.Column="5">
+                <rightBar:RightBar/>
+            </Grid>
+
+            <!-- right toolbar -->
+            <Grid Grid.Column="6" Background="#323844">
+                <TextBox Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top">btn</TextBox>
+            </Grid>
+
+        </Grid>
+
+        <!-- 拖拽条 -->
+        <GridSplitter Grid.Row="3" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                  Background="SkyBlue" ShowsPreview="False"/>
+
+        <!-- Bottom Bar -->
+        <StackPanel Grid.Row="4" Background="WhiteSmoke">
+            <bottomFuncBar:BtmBar_Func HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
+
+        <!-- Status Bar -->
+        <Grid Grid.Row="5">
+            <bottomBtnBar:BtmBar_Btn/>
+            <TextBox x:Name="WindowsActiveIcon"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Height="20" Width="20" Margin="0" />
+
+            <Label x:Name="expression_info" 
+               Content="..."
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="50,0,0,0"
+               Width="100"
+               Height="20"
+               FontFamily="Fira Code"
+               FontSize="10"/>
+        </Grid>
+    </Grid>
+</Window>
